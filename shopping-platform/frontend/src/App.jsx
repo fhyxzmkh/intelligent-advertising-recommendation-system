@@ -9,6 +9,7 @@ import { ProductList } from "./components/ProductList.jsx";
 function App() {
   const [uuid, setUuid] = useState("");
   const [products, setProducts] = useState([]);
+  const [shoppingCartGoods, setShoppingCartGoods] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies(["user_id"]);
 
@@ -32,12 +33,18 @@ function App() {
   return (
     <>
       <div className="main-container">
-        <Advertise />
+        <Advertise
+          cookies={cookies}
+          setCookie={setCookie}
+          removeCookie={removeCookie}
+        />
         <SearchBar
           setProducts={setProducts}
           cookies={cookies}
           setCookie={setCookie}
           removeCookie={removeCookie}
+          shoppingCartGoods={shoppingCartGoods}
+          setShoppingCartGoods={setShoppingCartGoods}
         />
         <ProductList
           products={products}
@@ -45,6 +52,7 @@ function App() {
           cookies={cookies}
           setCookie={setCookie}
           removeCookie={removeCookie}
+          setShoppingCartGoods={setShoppingCartGoods}
         />
       </div>
     </>

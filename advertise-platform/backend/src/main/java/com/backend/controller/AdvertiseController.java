@@ -1,7 +1,9 @@
 package com.backend.controller;
 
+import com.backend.entity.AdvertiseInfo;
 import com.backend.entity.NewsInfo;
 import com.backend.entity.ShoppingInfo;
+import com.backend.service.AdvertiseInfoService;
 import com.backend.service.NewsInfoService;
 import com.backend.service.ShoppingInfoService;
 import jakarta.servlet.http.Cookie;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,8 +28,11 @@ public class AdvertiseController {
     @Autowired
     private NewsInfoService newsInfoService;
 
+    @Autowired
+    private AdvertiseInfoService advertiseInfoService;
+
     @PostMapping
-    public void postAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+    public List<AdvertiseInfo> postAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
         String type = requestBody.get("type");
 
         String user_id = null;
@@ -57,6 +63,10 @@ public class AdvertiseController {
         String advertiseCategory = calcWeight(user_id);
         System.out.println(advertiseCategory);
 
+        if (!advertiseCategory.equals("随机"))
+            return advertiseInfoService.getAdvertiseInfoByCategory(advertiseCategory);
+        else
+            return advertiseInfoService.getAllAdvertiseInfo();
     }
 
     private boolean needUpdateInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
@@ -135,7 +145,12 @@ public class AdvertiseController {
             edu_score += newsInfo.getEduScore();
         }
 
+
         int maxScore = Math.max(sport_score, Math.max(digit_score, Math.max(program_score, edu_score)));
+
+        if (maxScore == 0) {
+            return "随机";
+        }
 
         if (maxScore == sport_score)
             return "运动";
@@ -145,10 +160,6 @@ public class AdvertiseController {
             return "编程";
         else if (maxScore == edu_score)
             return "考研";
-
-        if (maxScore == 0) {
-            return "随机";
-        }
 
         return "";
     }

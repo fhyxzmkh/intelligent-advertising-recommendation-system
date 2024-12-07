@@ -1,6 +1,7 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import { Avatar, Button, Input, List, Modal } from "antd";
 import axios from "axios";
+import { useState } from "react";
 
 const { Search } = Input;
 
@@ -9,6 +10,8 @@ export const SearchBar = ({
   cookies,
   setCookie,
   removeCookie,
+  shoppingCartGoods,
+  setShoppingCartGoods,
 }) => {
   const handleSearch = async (value) => {
     try {
@@ -61,54 +64,87 @@ export const SearchBar = ({
       .then((response) => {
         const category = response.data.choices[0].message.content;
         console.log("Category:", category);
-        updateCookie(category);
+        updateCookie(category, 20);
       })
       .catch((error) => {
         console.error("Error calling DeepSeek API:", error);
       });
   };
 
-  const updateCookie = (category) => {
+  const updateCookie = (category, weight) => {
     switch (category) {
       case "运动":
         if (!cookies.sport_score) {
-          setCookie("sport_score", 20);
+          setCookie("sport_score", weight);
         } else {
           const preScore = cookies.sport_score;
           removeCookie("sport_score");
-          setCookie("sport_score", Number(preScore) + 20);
+          setCookie("sport_score", Number(preScore) + weight);
         }
         break;
       case "编程":
         if (!cookies.program_score) {
-          setCookie("program_score", 20);
+          setCookie("program_score", weight);
         } else {
           const preScore = cookies.program_score;
           removeCookie("program_score");
-          setCookie("program_score", Number(preScore) + 20);
+          setCookie("program_score", Number(preScore) + weight);
         }
         break;
       case "数码":
         if (!cookies.digit_score) {
-          setCookie("digit_score", 20);
+          setCookie("digit_score", weight);
         } else {
           const preScore = cookies.digit_score;
           removeCookie("digit_score");
-          setCookie("digit_score", Number(preScore) + 20);
+          setCookie("digit_score", Number(preScore) + weight);
         }
         break;
       case "考研":
         if (!cookies.edu_score) {
-          setCookie("edu_score", 20);
+          setCookie("edu_score", weight);
         } else {
           const preScore = cookies.edu_score;
           removeCookie("edu_score");
-          setCookie("edu_score", Number(preScore) + 20);
+          setCookie("edu_score", Number(preScore) + weight);
         }
         break;
       default:
         return;
     }
+  };
+
+  const calculateTotalPrice = () => {
+    return shoppingCartGoods.reduce(
+      (total, item) => total + item.price * item.count,
+      0,
+    );
+  };
+
+  const handleClearCart = () => {
+    setShoppingCartGoods([]);
+    setIsModalOpen(false);
+  };
+
+  const handleClick = () => {
+    console.log(shoppingCartGoods);
+    setIsModalOpen(true);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    const totalPrice = calculateTotalPrice();
+    setIsModalOpen(false);
+    setShoppingCartGoods([]);
+    alert(
+      `目前暂未开通支付模块，请敬请期待！\n总价格: ￥${totalPrice.toFixed(2)}`,
+    );
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -119,9 +155,53 @@ export const SearchBar = ({
           placeholder="输入你想搜索的商品"
           onSearch={handleSearch}
         />
-        <ShoppingCartOutlined onClick={() => alert("haha")} />
-        <span>欢迎您，mkh！</span>
+        <ShoppingCartOutlined onClick={handleClick} />
+        <span>欢迎您！</span>
       </div>
+
+      <Modal
+        title="我的购物车"
+        open={isModalOpen}
+        okText="下单"
+        cancelText="清空"
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="clear" onClick={handleClearCart}>
+            清空
+          </Button>,
+          <Button key="order" type="primary" onClick={handleOk}>
+            下单
+          </Button>,
+        ]}
+      >
+        <List
+          itemLayout="horizontal"
+          dataSource={shoppingCartGoods}
+          renderItem={(obj) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar
+                    shape="square"
+                    size={{
+                      xs: 24,
+                      sm: 32,
+                      md: 40,
+                      lg: 64,
+                      xl: 80,
+                      xxl: 100,
+                    }}
+                    src={obj.img_url}
+                  />
+                }
+                title={obj.name}
+                description={`￥ ${obj.price} × ${obj.count}`}
+              />
+            </List.Item>
+          )}
+        />
+      </Modal>
     </>
   );
 };

@@ -13,4 +13,13 @@ public class AdvertiseInfoService {
     @Autowired
     private AdvertiseInfoMapper advertiseInfoMapper;
 
+    public List<AdvertiseInfo> getAllAdvertiseInfo() {
+        return advertiseInfoMapper.selectAll();
+    }
+
+
+    public List<AdvertiseInfo> getAdvertiseInfoByCategory(String category) {
+        return advertiseInfoMapper.selectByCategory(category);
+    }
+
 }

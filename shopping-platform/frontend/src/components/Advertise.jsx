@@ -1,17 +1,11 @@
 import { Carousel } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-const contentStyle = {
-  margin: 0,
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
+export const Advertise = ({ cookies, setCookie, removeCookie }) => {
+  const [advertises, setAdvertises] = useState([]);
+  const [randomAds, setRandomAds] = useState([]);
 
-export const Advertise = () => {
   useEffect(() => {
     const getAdvertise = async () => {
       await axios
@@ -24,6 +18,7 @@ export const Advertise = () => {
         )
         .then((response) => {
           console.log("Response:", response.data);
+          setAdvertises(response.data);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -32,19 +27,80 @@ export const Advertise = () => {
     getAdvertise();
   }, []);
 
+  useEffect(() => {
+    if (advertises.length > 0) {
+      // 随机选择三个广告
+      const shuffledAds = [...advertises].sort(() => 0.5 - Math.random());
+      const selectedAds = shuffledAds.slice(0, 3);
+      setRandomAds(selectedAds);
+    }
+  }, [advertises]);
+
+  const updateCookie = (category) => {
+    switch (category) {
+      case "运动":
+        if (!cookies.sport_score) {
+          setCookie("sport_score", 30);
+        } else {
+          const preScore = cookies.sport_score;
+          removeCookie("sport_score");
+          setCookie("sport_score", Number(preScore) + 30);
+        }
+        break;
+      case "编程":
+        if (!cookies.program_score) {
+          setCookie("program_score", 30);
+        } else {
+          const preScore = cookies.program_score;
+          removeCookie("program_score");
+          setCookie("program_score", Number(preScore) + 30);
+        }
+        break;
+      case "数码":
+        if (!cookies.digit_score) {
+          setCookie("digit_score", 30);
+        } else {
+          const preScore = cookies.digit_score;
+          removeCookie("digit_score");
+          setCookie("digit_score", Number(preScore) + 30);
+        }
+        break;
+      case "考研":
+        if (!cookies.edu_score) {
+          setCookie("edu_score", 30);
+        } else {
+          const preScore = cookies.edu_score;
+          removeCookie("edu_score");
+          setCookie("edu_score", Number(preScore) + 30);
+        }
+        break;
+      default:
+        return;
+    }
+  };
+
+  const handleClick = (category) => {
+    alert(`This is ${category}!`);
+    updateCookie(category);
+  };
+
   return (
     <>
       <div className="ad-container">
-        <Carousel arrows infinite={false}>
-          <div>
-            <h3 style={contentStyle}>1</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>2</h3>
-          </div>
-          <div>
-            <h3 style={contentStyle}>3</h3>
-          </div>
+        <Carousel autoplay adaptiveHeight infinite={false} arrows={true}>
+          {randomAds.map((ad) => (
+            <div
+              className="cursor-pointer"
+              key={ad.adId}
+              onClick={() => handleClick(ad.adCategory)}
+            >
+              <img
+                src={ad.imgUrl}
+                alt={ad.adName}
+                className="w-[1920px] h-[360px]"
+              />
+            </div>
+          ))}
         </Carousel>
       </div>
     </>

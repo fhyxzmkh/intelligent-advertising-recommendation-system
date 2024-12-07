@@ -8,56 +8,56 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class AdvertiseInfo {
 
     @TableId("ad_id")
-    private String AdvertiseId;
+    private String adId;
 
     @TableField("ad_name")
-    private String AdvertiseName;
+    private String adName;
 
     @TableField("ad_category")
-    private String AdvertiseCategory;
+    private String adCategory;
 
     @TableField("img_url")
-    private String ImgUrl;
+    private String imgUrl;
 
-    public String getAdvertiseId() {
-        return AdvertiseId;
+    public String getAdId() {
+        return adId;
     }
 
-    public void setAdvertiseId(String advertiseId) {
-        AdvertiseId = advertiseId;
+    public void setAdId(String adId) {
+        this.adId = adId;
     }
 
-    public String getAdvertiseName() {
-        return AdvertiseName;
+    public String getAdName() {
+        return adName;
     }
 
-    public void setAdvertiseName(String advertiseName) {
-        AdvertiseName = advertiseName;
+    public void setAdName(String adName) {
+        this.adName = adName;
     }
 
-    public String getAdvertiseCategory() {
-        return AdvertiseCategory;
+    public String getAdCategory() {
+        return adCategory;
     }
 
-    public void setAdvertiseCategory(String advertiseCategory) {
-        AdvertiseCategory = advertiseCategory;
+    public void setAdCategory(String adCategory) {
+        this.adCategory = adCategory;
     }
 
     public String getImgUrl() {
-        return ImgUrl;
+        return imgUrl;
     }
 
     public void setImgUrl(String imgUrl) {
-        ImgUrl = imgUrl;
+        this.imgUrl = imgUrl;
     }
 
     @Override
     public String toString() {
         return "AdvertiseInfo{" +
-                "AdvertiseId='" + AdvertiseId + '\'' +
-                ", AdvertiseName='" + AdvertiseName + '\'' +
-                ", AdvertiseCategory='" + AdvertiseCategory + '\'' +
-                ", ImgUrl='" + ImgUrl + '\'' +
+                "adId='" + adId + '\'' +
+                ", adName='" + adName + '\'' +
+                ", adCategory='" + adCategory + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
 }
