@@ -36,4 +36,10 @@ public class ProductInfoService {
         return productInfoMapper.selectList(queryWrapper);
     }
 
+    public List<ProductInfo> getAllProductInfoByCategory(String category) {
+        QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category", category);
+        return productInfoMapper.selectList(queryWrapper);
+    }
+
 }

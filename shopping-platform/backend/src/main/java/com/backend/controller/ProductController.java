@@ -28,6 +28,14 @@ public class ProductController {
         return productInfoList;
     }
 
+    @GetMapping("/category")
+    public List<ProductInfo> getProductsByCategory(@RequestParam String category) {
+        List<ProductInfo> productInfoList = productInfoService.getAllProductInfoByCategory(category);
+        logger.info("Fetched {} products in category: {}", productInfoList.size(), category);
+        productInfoList.forEach(productInfo -> logger.info(productInfo.toString()));
+        return productInfoList;
+    }
+
     @PostMapping
     public List<ProductInfo> getTargetProducts(@RequestBody Map<String, String> requestBody) {
         String keyword = requestBody.get("keyword");

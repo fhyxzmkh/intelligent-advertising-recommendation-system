@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { Advertise } from "./components/Advertise.jsx";
 import { SearchBar } from "./components/SearchBar.jsx";
 import { ProductList } from "./components/ProductList.jsx";
+import { CategoryBrowse } from "./components/CategoryBrowse.jsx";
 
 function App() {
   const [uuid, setUuid] = useState("");
@@ -45,6 +46,12 @@ function App() {
           removeCookie={removeCookie}
           shoppingCartGoods={shoppingCartGoods}
           setShoppingCartGoods={setShoppingCartGoods}
+        />
+        <CategoryBrowse
+          setProducts={setProducts}
+          cookies={cookies}
+          setCookie={setCookie}
+          removeCookie={removeCookie}
         />
         <ProductList
           products={products}
