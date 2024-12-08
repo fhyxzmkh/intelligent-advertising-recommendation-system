@@ -2,9 +2,19 @@ import { Button, Checkbox, Flex, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 export const LoginPage = ({ setCurrentUser }) => {
   let navigate = useNavigate();
+
+  const [form] = Form.useForm();
+  useEffect(() => {
+    // 从 localStorage 中读取用户信息并自动填充表单
+    const savedUser = JSON.parse(localStorage.getItem("savedUser"));
+    if (savedUser) {
+      form.setFieldsValue(savedUser);
+    }
+  }, [form]);
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -14,12 +24,28 @@ export const LoginPage = ({ setCurrentUser }) => {
       .then((response) => {
         console.log("Registration successful:", response.data);
         alert("Login successful");
+
+        // 更新当前用户状态
         setCurrentUser({
           username: response.data.username,
           role: response.data.role,
           activated: response.data.activated,
         });
 
+        // 如果用户选择了记住账号密码，则将用户信息存储到 localStorage
+        if (values.remember) {
+          localStorage.setItem(
+            "savedUser",
+            JSON.stringify({
+              username: values.username,
+              password: values.password,
+            }),
+          );
+        } else {
+          localStorage.removeItem("savedUser");
+        }
+
+        // 转到相应页面
         navigate("/admin");
       })
       .catch((error) => {
@@ -42,6 +68,7 @@ export const LoginPage = ({ setCurrentUser }) => {
         <div className="w-1/4 border-2 rounded-lg bg-gray-100">
           <h2 className="m-4 font-bold text-2xl text-center">登录</h2>
           <Form
+            form={form}
             name="login"
             initialValues={{
               remember: true,
