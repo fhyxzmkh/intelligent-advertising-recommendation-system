@@ -20,7 +20,7 @@ export const SearchBar = ({
 
     try {
       const resp = await axios.get(url);
-      setNewsList(resp.data.articles.slice(0, 5));
+      setNewsList(resp.data.articles);
       console.log(resp.data.articles.slice(0, 5));
     } catch (error) {
       console.error("Error searching news:", error);
@@ -67,7 +67,7 @@ export const SearchBar = ({
       .then((response) => {
         const category = response.data.choices[0].message.content;
         console.log("Category:", category);
-        // updateCookie(category, 20);
+        updateCookie(category, 20);
       })
       .catch((error) => {
         console.error("Error calling DeepSeek API:", error);
@@ -125,7 +125,6 @@ export const SearchBar = ({
           placeholder="输入你想搜索的新闻"
           onSearch={handleSearch}
         />
-        <span>欢迎您！</span>
       </div>
     </>
   );

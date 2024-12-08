@@ -11,7 +11,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
       await axios
         .post(
           "http://localhost:8102/api/advertise",
-          { type: "shopping" },
+          { type: "news" },
           {
             withCredentials: true, // 确保Cookie被发送
           },
@@ -97,7 +97,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
               <img
                 src={ad.imgUrl}
                 alt={ad.adName}
-                className="w-[1920px] h-[360px]"
+                className="w-[1920px] h-[300px]"
               />
             </div>
           ))}
