@@ -1,11 +1,11 @@
 package com.backend.controller;
 
 import com.backend.entity.AdvertiseInfo;
-import com.backend.entity.NewsInfo;
-import com.backend.entity.ShoppingInfo;
+import com.backend.entity.NewsUserProfile;
+import com.backend.entity.ShoppingUserProfile;
 import com.backend.service.AdvertiseInfoService;
-import com.backend.service.NewsInfoService;
-import com.backend.service.ShoppingInfoService;
+import com.backend.service.NewsUserProfileService;
+import com.backend.service.ShoppingUserProfileService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,10 @@ import java.util.Objects;
 public class AdvertiseController {
 
     @Autowired
-    private ShoppingInfoService shoppingInfoService;
+    private ShoppingUserProfileService shoppingUserProfileService;
 
     @Autowired
-    private NewsInfoService newsInfoService;
+    private NewsUserProfileService newsUserProfileService;
 
     @Autowired
     private AdvertiseInfoService advertiseInfoService;
@@ -72,7 +72,7 @@ public class AdvertiseController {
     private boolean needUpdateInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
 
         if ("shopping".equals(type)) {
-            ShoppingInfo shoppingInfo = shoppingInfoService.getShoppingInfoByUserId(user_id);
+            ShoppingUserProfile shoppingInfo = shoppingUserProfileService.getShoppingInfoByUserId(user_id);
 
             if (shoppingInfo == null) {
                 return true;
@@ -84,7 +84,7 @@ public class AdvertiseController {
                     shoppingInfo.getEduScore() != edu_score;
         }
         if ("news".equals(type)) {
-            NewsInfo newsInfo = newsInfoService.getNewsInfoByUserId(user_id);
+            NewsUserProfile newsInfo = newsUserProfileService.getNewsInfoByUserId(user_id);
 
             if (newsInfo == null) {
                 return true;
@@ -102,7 +102,7 @@ public class AdvertiseController {
     private void updateInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
 
         if ("shopping".equals(type)) {
-            ShoppingInfo shoppingInfo = new ShoppingInfo();
+            ShoppingUserProfile shoppingInfo = new ShoppingUserProfile();
 
             shoppingInfo.setUserId(user_id);
             shoppingInfo.setSportScore(sport_score);
@@ -110,10 +110,10 @@ public class AdvertiseController {
             shoppingInfo.setProgramScore(program_score);
             shoppingInfo.setEduScore(edu_score);
 
-            shoppingInfoService.insertOrUpdateShoppingInfo(shoppingInfo);
+            shoppingUserProfileService.insertOrUpdateShoppingInfo(shoppingInfo);
         }
         if ("news".equals(type)) {
-            NewsInfo newsInfo = new NewsInfo();
+            NewsUserProfile newsInfo = new NewsUserProfile();
 
             newsInfo.setUserId(user_id);
             newsInfo.setSportScore(sport_score);
@@ -121,7 +121,7 @@ public class AdvertiseController {
             newsInfo.setProgramScore(program_score);
             newsInfo.setEduScore(edu_score);
 
-            newsInfoService.insertOrUpdateNewsInfo(newsInfo);
+            newsUserProfileService.insertOrUpdateNewsInfo(newsInfo);
         }
 
     }
@@ -129,7 +129,7 @@ public class AdvertiseController {
     private String calcWeight(String user_id) {
         int sport_score = 0, digit_score = 0, program_score = 0, edu_score = 0;
 
-        ShoppingInfo shoppingInfo = shoppingInfoService.getShoppingInfoByUserId(user_id);
+        ShoppingUserProfile shoppingInfo = shoppingUserProfileService.getShoppingInfoByUserId(user_id);
         if (shoppingInfo != null) {
             sport_score += shoppingInfo.getSportScore();
             digit_score += shoppingInfo.getDigitScore();
@@ -137,7 +137,7 @@ public class AdvertiseController {
             edu_score += shoppingInfo.getEduScore();
         }
 
-        NewsInfo newsInfo = newsInfoService.getNewsInfoByUserId(user_id);
+        NewsUserProfile newsInfo = newsUserProfileService.getNewsInfoByUserId(user_id);
         if (newsInfo != null) {
             sport_score += newsInfo.getSportScore();
             digit_score += newsInfo.getDigitScore();

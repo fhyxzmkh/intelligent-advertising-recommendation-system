@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-@TableName("shopping_info")
-public class ShoppingInfo {
+@TableName("shopping_user_profile")
+public class ShoppingUserProfile {
 
     @TableId("user_id")
     private String userId;

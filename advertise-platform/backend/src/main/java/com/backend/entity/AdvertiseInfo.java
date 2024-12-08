@@ -19,6 +19,12 @@ public class AdvertiseInfo {
     @TableField("img_url")
     private String imgUrl;
 
+    @TableField("drop_location")
+    private CONSTANT.DropLocation dropLocation; // 广告位置
+
+    @TableField("is_activated")
+    private boolean isActivated; // 是否激活
+
     public String getAdId() {
         return adId;
     }
@@ -51,6 +57,22 @@ public class AdvertiseInfo {
         this.imgUrl = imgUrl;
     }
 
+    public CONSTANT.DropLocation getDropLocation() {
+        return dropLocation;
+    }
+
+    public void setDropLocation(CONSTANT.DropLocation dropLocation) {
+        this.dropLocation = dropLocation;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
     @Override
     public String toString() {
         return "AdvertiseInfo{" +
@@ -58,6 +80,8 @@ public class AdvertiseInfo {
                 ", adName='" + adName + '\'' +
                 ", adCategory='" + adCategory + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
+                ", dropLocation=" + dropLocation +
+                ", isActivated=" + isActivated +
                 '}';
     }
 }
