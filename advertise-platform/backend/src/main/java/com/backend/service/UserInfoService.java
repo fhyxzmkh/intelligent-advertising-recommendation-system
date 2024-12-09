@@ -5,6 +5,8 @@ import com.backend.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserInfoService {
 
@@ -13,6 +15,14 @@ public class UserInfoService {
 
     public void insertUser(UserInfo userInfo) {
         userInfoMapper.insert(userInfo);
+    }
+
+    public List<UserInfo> getAllUserInfo() {
+        return userInfoMapper.selectList(null);
+    }
+
+    public UserInfo getUserInfoById(String uid) {
+        return userInfoMapper.selectById(uid);
     }
 
     public UserInfo findByUsername(String username) {
@@ -26,4 +36,13 @@ public class UserInfoService {
         }
         return false;
     }
+
+    public void updateUserInfo(UserInfo userInfo) {
+        userInfoMapper.updateById(userInfo);
+    }
+
+    public void deleteUserInfo(String uid) {
+        userInfoMapper.deleteById(uid);
+    }
+
 }

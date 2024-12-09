@@ -1,10 +1,8 @@
-import { Button, Result, Menu, MenuProps } from "antd";
-import { ProfileOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Menu, MenuProps, Result } from "antd";
+import { ProfileOutlined, DashboardOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-import { AddUser } from "../modules/AddUser";
-import { ChangeUser } from "../modules/ChangeUser";
-import { DeleteUser } from "../modules/DeleteUser";
+import { AddAdvertise } from "../modules/AddAdvertise";
 import { ChangeAdvertise } from "../modules/ChangeAdvertise";
 import { DeleteAdvertise } from "../modules/DeleteAdvertise";
 
@@ -12,12 +10,12 @@ type MenuItem = Required<MenuProps>["items"][number];
 const items: MenuItem[] = [
   {
     key: "sub1",
-    label: "用户管理",
-    icon: <UserOutlined />,
+    label: "广告管理",
+    icon: <ProfileOutlined />,
     children: [
-      { key: "1", label: "新增用户" },
-      { key: "2", label: "修改用户信息" },
-      { key: "3", label: "注销用户" },
+      { key: "1", label: "新增广告" },
+      { key: "2", label: "修改广告信息" },
+      { key: "3", label: "删除广告" },
     ],
   },
   {
@@ -25,19 +23,19 @@ const items: MenuItem[] = [
   },
   {
     key: "sub2",
-    label: "广告管理",
-    icon: <ProfileOutlined />,
+    label: "统计数据",
+    icon: <DashboardOutlined />,
     children: [
-      { key: "4", label: "修改广告信息" },
-      { key: "5", label: "删除广告" },
+      { key: "4", label: "投放效果" },
+      { key: "5", label: "广告收益" },
     ],
   },
 ];
 
-export const AdminPage = ({ currentUser }) => {
+export const AdvertiserPage = ({ currentUser }) => {
   if (
     currentUser === null ||
-    currentUser.role !== "ADMIN" ||
+    currentUser.role !== "ADVERTISER" ||
     currentUser.activated === false
   ) {
     return (
@@ -75,11 +73,17 @@ export const AdminPage = ({ currentUser }) => {
           />
         </div>
         <div className="w-full h-screen bg-red-50">
-          {currentSelect === "1" ? <AddUser /> : null}
-          {currentSelect === "2" ? <ChangeUser /> : null}
-          {currentSelect === "3" ? <DeleteUser /> : null}
-          {currentSelect === "4" ? <ChangeAdvertise /> : null}
-          {currentSelect === "5" ? <DeleteAdvertise /> : null}
+          {currentSelect === "1" ? (
+            <AddAdvertise currentUser={currentUser} />
+          ) : null}
+          {currentSelect === "2" ? (
+            <ChangeAdvertise currentUser={currentUser} />
+          ) : null}
+          {currentSelect === "3" ? (
+            <DeleteAdvertise currentUser={currentUser} />
+          ) : null}
+          {currentSelect === "4" ? <></> : null}
+          {currentSelect === "5" ? <></> : null}
         </div>
       </div>
     </>

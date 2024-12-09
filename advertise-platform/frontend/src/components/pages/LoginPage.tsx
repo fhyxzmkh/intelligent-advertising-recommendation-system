@@ -27,8 +27,10 @@ export const LoginPage = ({ setCurrentUser }) => {
 
         // 更新当前用户状态
         setCurrentUser({
+          uid: response.data.uid,
           username: response.data.username,
           role: response.data.role,
+          apiKey: response.data.apiKey,
           activated: response.data.activated,
         });
 
@@ -46,7 +48,16 @@ export const LoginPage = ({ setCurrentUser }) => {
         }
 
         // 转到相应页面
-        navigate("/admin");
+        switch (response.data.role) {
+          case "ADMIN":
+            navigate("/admin");
+            break;
+          case "ADVERTISER":
+            navigate("/advertiser");
+            break;
+          default:
+            break;
+        }
       })
       .catch((error) => {
         console.error("Registration failed:", error);

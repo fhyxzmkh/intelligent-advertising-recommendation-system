@@ -9,14 +9,12 @@ import com.backend.service.ShoppingUserProfileService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/advertise")
@@ -31,8 +29,38 @@ public class AdvertiseController {
     @Autowired
     private AdvertiseInfoService advertiseInfoService;
 
+    @PostMapping("/add")
+    public void insertAdvertise(@RequestBody AdvertiseInfo advertiseInfo) {
+        advertiseInfo.setAdId(UUID.randomUUID().toString());
+        advertiseInfoService.insertAdvertiseInfo(advertiseInfo);
+    }
+
+    @GetMapping("/my-advertise")
+    public List<AdvertiseInfo> getMyAdvertise(@RequestParam("author") String author) {
+        return advertiseInfoService.getAdvertiseInfoByAuthor(author);
+    }
+
+    @GetMapping("/all")
+    public List<AdvertiseInfo> getAllAdvertise() {
+        return advertiseInfoService.getAllAdvertiseInfo();
+    }
+
+    @GetMapping("/delete")
+    public void deleteAdvertise(@RequestParam("adId") String adId) {
+        advertiseInfoService.deleteAdvertiseInfoById(adId);
+    }
+
+    @PostMapping("/update")
+    public void updateAdvertise(@RequestBody AdvertiseInfo advertiseInfo) {
+        AdvertiseInfo ad = advertiseInfoService.getAdvertiseInfoById(advertiseInfo.getAdId());
+        advertiseInfo.setAuthor(ad.getAuthor());
+
+        advertiseInfoService.updateAdvertiseInfo(advertiseInfo);
+    }
+
+
     @PostMapping
-    public List<AdvertiseInfo> postAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+    public List<AdvertiseInfo> getParticularAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
         String type = requestBody.get("type");
 
         String user_id = null;

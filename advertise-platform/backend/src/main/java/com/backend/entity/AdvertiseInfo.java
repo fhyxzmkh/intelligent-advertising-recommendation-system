@@ -25,6 +25,12 @@ public class AdvertiseInfo {
     @TableField("is_activated")
     private boolean isActivated; // 是否激活
 
+    @TableField("unit_price")
+    private Integer unitPrice; // 广告单价
+
+    @TableField("author")
+    private String author;
+
     public String getAdId() {
         return adId;
     }
@@ -73,6 +79,22 @@ public class AdvertiseInfo {
         isActivated = activated;
     }
 
+    public Integer getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(Integer unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     @Override
     public String toString() {
         return "AdvertiseInfo{" +
@@ -82,6 +104,8 @@ public class AdvertiseInfo {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", dropLocation=" + dropLocation +
                 ", isActivated=" + isActivated +
+                ", unitPrice=" + unitPrice +
+                ", author='" + author + '\'' +
                 '}';
     }
 }

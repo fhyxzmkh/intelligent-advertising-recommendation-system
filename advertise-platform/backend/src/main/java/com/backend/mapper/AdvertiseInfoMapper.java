@@ -12,6 +12,8 @@ public interface AdvertiseInfoMapper extends BaseMapper<AdvertiseInfo> {
 
     List<AdvertiseInfo> selectByCategory(@Param("category") String category);
 
+    List<AdvertiseInfo> selectByAuthor(@Param("author") String author);
+
     List<AdvertiseInfo> selectAll();
 
 }

@@ -9,6 +9,10 @@
         SELECT * FROM advertise_info WHERE ad_category = #{category}
     </select>
 
+    <select id="selectByAuthor" resultType="com.backend.entity.AdvertiseInfo">
+        SELECT * FROM advertise_info WHERE author = #{author}
+    </select>
+
     <select id="selectAll" resultType="com.backend.entity.AdvertiseInfo">
         SELECT * FROM advertise_info
     </select>

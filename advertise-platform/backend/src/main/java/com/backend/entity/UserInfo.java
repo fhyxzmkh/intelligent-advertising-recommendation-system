@@ -22,6 +22,9 @@ public class UserInfo {
     @TableField("is_activated")
     private boolean isActivated; // 是否激活
 
+    @TableField("api_key")
+    private String apiKey;
+
     public String getUid() {
         return uid;
     }
@@ -62,6 +65,14 @@ public class UserInfo {
         isActivated = activated;
     }
 
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
@@ -70,6 +81,7 @@ public class UserInfo {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", isActivated=" + isActivated +
+                ", apiKey='" + apiKey + '\'' +
                 '}';
     }
 }

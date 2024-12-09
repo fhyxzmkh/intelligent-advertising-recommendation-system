@@ -1,12 +1,15 @@
 import { LoginPage } from "./components/pages/LoginPage.js";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { RegisterPage } from "./components/pages/RegisterPage.jsx";
 import { AdminPage } from "./components/pages/AdminPage.js";
 import { useState } from "react";
+import { AdvertiserPage } from "./components/pages/AdvertiserPage";
 
 type User = {
+  uid: string;
   username: string;
   role: string;
+  apiKey: string;
   activated: boolean;
 };
 
@@ -18,6 +21,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route
           path="/login"
           element={<LoginPage setCurrentUser={setCurrentUser} />}
@@ -26,6 +30,10 @@ function App() {
         <Route
           path="/admin"
           element={<AdminPage currentUser={currentUser} />}
+        />
+        <Route
+          path="/advertiser"
+          element={<AdvertiserPage currentUser={currentUser} />}
         />
       </Routes>
     </>
