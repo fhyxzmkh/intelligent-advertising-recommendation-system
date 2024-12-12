@@ -79,6 +79,55 @@ export const NewsList = ({
     }
   };
 
+  const handleContent = async (value) => {
+    const data = JSON.stringify({
+      messages: [
+        {
+          content: `新闻内容为：${value}，此内容属于运动、数码、考研、编程四大类中的哪一类？直接给出类别，不要冗余文字。`,
+          role: "system",
+        },
+      ],
+      model: "deepseek-chat",
+      frequency_penalty: 0,
+      max_tokens: 2048,
+      presence_penalty: 0,
+      response_format: {
+        type: "text",
+      },
+      stop: null,
+      stream: false,
+      stream_options: null,
+      temperature: 1,
+      top_p: 1,
+      tools: null,
+      tool_choice: "none",
+      logprobs: false,
+      top_logprobs: null,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://api.deepseek.com/chat/completions",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer sk-6f1569d8dc1e46fc9d29750c08702199",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then((response) => {
+        const category = response.data.choices[0].message.content;
+        console.log("Category:", category);
+        updateCookie(category, 20);
+      })
+      .catch((error) => {
+        console.error("Error calling DeepSeek API:", error);
+      });
+  };
+
   return (
     <>
       <div className="flex justify-center items-center">
@@ -130,7 +179,10 @@ export const NewsList = ({
               renderItem={(item) => (
                 <List.Item
                   className="cursor-pointer"
-                  onClick={() => window.open(item.url, "_blank")}
+                  onClick={() => {
+                    handleContent(item.content);
+                    window.open(item.url, "_blank");
+                  }}
                 >
                   <List.Item.Meta
                     title={item.title}
