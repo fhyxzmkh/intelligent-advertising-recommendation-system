@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AddAdvertise } from "../modules/AddAdvertise";
 import { ChangeAdvertise } from "../modules/ChangeAdvertise";
 import { DeleteAdvertise } from "../modules/DeleteAdvertise";
+import { TimeIntervalStatistics } from "../modules/TimeIntervalStatistics";
 
 type MenuItem = Required<MenuProps>["items"][number];
 const items: MenuItem[] = [
@@ -26,7 +27,7 @@ const items: MenuItem[] = [
     label: "统计数据",
     icon: <DashboardOutlined />,
     children: [
-      { key: "4", label: "投放效果" },
+      { key: "4", label: "时段统计" },
       { key: "5", label: "广告收益" },
     ],
   },
@@ -82,7 +83,9 @@ export const AdvertiserPage = ({ currentUser }) => {
           {currentSelect === "3" ? (
             <DeleteAdvertise currentUser={currentUser} />
           ) : null}
-          {currentSelect === "4" ? <></> : null}
+          {currentSelect === "4" ? (
+            <TimeIntervalStatistics currentUser={currentUser} />
+          ) : null}
           {currentSelect === "5" ? <></> : null}
         </div>
       </div>

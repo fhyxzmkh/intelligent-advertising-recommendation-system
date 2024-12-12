@@ -31,6 +31,9 @@ public class AdvertiseInfo {
     @TableField("author")
     private String author;
 
+    @TableField("clicked_count")
+    private Integer clickedCount;
+
     public String getAdId() {
         return adId;
     }
@@ -95,17 +98,12 @@ public class AdvertiseInfo {
         this.author = author;
     }
 
-    @Override
-    public String toString() {
-        return "AdvertiseInfo{" +
-                "adId='" + adId + '\'' +
-                ", adName='" + adName + '\'' +
-                ", adCategory='" + adCategory + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", dropLocation=" + dropLocation +
-                ", isActivated=" + isActivated +
-                ", unitPrice=" + unitPrice +
-                ", author='" + author + '\'' +
-                '}';
+    public Integer getClickedCount() {
+        return clickedCount;
     }
+
+    public void setClickedCount(Integer clickedCount) {
+        this.clickedCount = clickedCount;
+    }
+
 }

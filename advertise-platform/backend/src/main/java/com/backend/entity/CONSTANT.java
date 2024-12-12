@@ -11,4 +11,8 @@ public class CONSTANT {
         WEBMASTER,
         ADVERTISER
     }
+
+    public enum OperationType {
+        CLICK
+    }
 }

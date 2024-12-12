@@ -79,9 +79,12 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     }
   };
 
-  const handleClick = (category) => {
-    alert(`This is ${category}!`);
-    updateCookie(category);
+  const handleClick = (ad) => {
+    alert(`This is ${ad.adCategory}!`);
+    // alert(`adId: ${ad.adId}`);
+    updateCookie(ad.category);
+
+    axios.get(`http://localhost:8102/api/statistic/click?adId=${ad.adId}`);
   };
 
   return (
@@ -92,7 +95,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
             <div
               className="cursor-pointer"
               key={ad.adId}
-              onClick={() => handleClick(ad.adCategory)}
+              onClick={() => handleClick(ad)}
             >
               <img
                 src={ad.imgUrl}
