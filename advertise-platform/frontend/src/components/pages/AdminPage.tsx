@@ -78,8 +78,12 @@ export const AdminPage = ({ currentUser }) => {
           {currentSelect === "1" ? <AddUser /> : null}
           {currentSelect === "2" ? <ChangeUser /> : null}
           {currentSelect === "3" ? <DeleteUser /> : null}
-          {currentSelect === "4" ? <ChangeAdvertise /> : null}
-          {currentSelect === "5" ? <DeleteAdvertise /> : null}
+          {currentSelect === "4" ? (
+            <ChangeAdvertise currentUser={currentUser} />
+          ) : null}
+          {currentSelect === "5" ? (
+            <DeleteAdvertise currentUser={currentUser} />
+          ) : null}
         </div>
       </div>
     </>

@@ -34,6 +34,9 @@ public class AdvertiseInfo {
     @TableField("clicked_count")
     private Integer clickedCount;
 
+    @TableField("showed_count")
+    private Integer showedCount;
+
     public String getAdId() {
         return adId;
     }
@@ -106,4 +109,11 @@ public class AdvertiseInfo {
         this.clickedCount = clickedCount;
     }
 
+    public Integer getShowedCount() {
+        return showedCount;
+    }
+
+    public void setShowedCount(Integer showedCount) {
+        this.showedCount = showedCount;
+    }
 }

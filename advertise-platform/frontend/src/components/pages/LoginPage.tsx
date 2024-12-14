@@ -55,6 +55,9 @@ export const LoginPage = ({ setCurrentUser }) => {
           case "ADVERTISER":
             navigate("/advertiser");
             break;
+          case "WEBMASTER":
+            navigate("/webmaster");
+            break;
           default:
             break;
         }

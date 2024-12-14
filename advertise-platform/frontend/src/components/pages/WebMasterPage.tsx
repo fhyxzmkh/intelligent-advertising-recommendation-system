@@ -1,24 +1,22 @@
 import { Button, Menu, MenuProps, Result } from "antd";
-import { ProfileOutlined, DashboardOutlined } from "@ant-design/icons";
+import { DashboardOutlined, ProfileOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-import { AddAdvertise } from "../modules/AddAdvertise";
-import { ChangeAdvertise } from "../modules/ChangeAdvertise";
-import { DeleteAdvertise } from "../modules/DeleteAdvertise";
-import { TimeIntervalStatistics } from "../modules/TimeIntervalStatistics";
-import { AdvertisingEffect } from "../modules/AdvertisingEffect";
-import { AdvertisingRevenue } from "../modules/AdvertisingRevenue";
+import { WebMasterAdvertiseInfo } from "../modules/WebMasterAdvertiseInfo";
+import { ApiFunction } from "../modules/ApiFunction";
+import { WebMasterTimeIntervalStatistics } from "../modules/WebMasterTimeIntervalStatistics";
+import { WebMasterAdvertisingEffect } from "../modules/WebMasterAdvertisingEffect";
+import { WebMasterRevenue } from "../modules/WebMasterRevenue";
 
 type MenuItem = Required<MenuProps>["items"][number];
 const items: MenuItem[] = [
   {
     key: "sub1",
-    label: "广告管理",
+    label: "广告事务",
     icon: <ProfileOutlined />,
     children: [
-      { key: "1", label: "新增广告" },
-      { key: "2", label: "修改广告信息" },
-      { key: "3", label: "删除广告" },
+      { key: "1", label: "广告一览" },
+      { key: "2", label: "API管理" },
     ],
   },
   {
@@ -29,17 +27,17 @@ const items: MenuItem[] = [
     label: "统计数据",
     icon: <DashboardOutlined />,
     children: [
-      { key: "4", label: "时段统计" },
-      { key: "5", label: "投放效果" },
-      { key: "6", label: "广告收益" },
+      { key: "3", label: "时段统计" },
+      { key: "4", label: "广告效果" },
+      { key: "5", label: "广告收益" },
     ],
   },
 ];
 
-export const AdvertiserPage = ({ currentUser }) => {
+export const WebMasterPage = ({ currentUser }) => {
   if (
     currentUser === null ||
-    currentUser.role !== "ADVERTISER" ||
+    currentUser.role !== "WEBMASTER" ||
     currentUser.activated === false
   ) {
     return (
@@ -78,22 +76,19 @@ export const AdvertiserPage = ({ currentUser }) => {
         </div>
         <div className="w-full h-screen bg-red-50">
           {currentSelect === "1" ? (
-            <AddAdvertise currentUser={currentUser} />
+            <WebMasterAdvertiseInfo currentUser={currentUser} />
           ) : null}
           {currentSelect === "2" ? (
-            <ChangeAdvertise currentUser={currentUser} />
+            <ApiFunction currentUser={currentUser} />
           ) : null}
           {currentSelect === "3" ? (
-            <DeleteAdvertise currentUser={currentUser} />
+            <WebMasterTimeIntervalStatistics currentUser={currentUser} />
           ) : null}
           {currentSelect === "4" ? (
-            <TimeIntervalStatistics currentUser={currentUser} />
+            <WebMasterAdvertisingEffect currentUser={currentUser} />
           ) : null}
           {currentSelect === "5" ? (
-            <AdvertisingEffect currentUser={currentUser} />
-          ) : null}
-          {currentSelect === "6" ? (
-            <AdvertisingRevenue currentUser={currentUser} />
+            <WebMasterRevenue currentUser={currentUser} />
           ) : null}
         </div>
       </div>

@@ -28,4 +28,8 @@ public class AdvertiseStatisticsService {
     public Integer getClickedCount(String adId) {
         return advertiseStatisticsMapper.selectClickedCount(adId);
     }
+
+    public Integer getShowedCount(String adId) {
+        return advertiseStatisticsMapper.selectShowedCount(adId);
+    }
 }

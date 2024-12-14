@@ -36,6 +36,15 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     }
   }, [advertises]);
 
+  useEffect(() => {
+    // 在 randomAds 更新后，调用 API 记录广告展示
+    if (randomAds.length > 0) {
+      randomAds.forEach((ad) => {
+        axios.get(`http://localhost:8102/api/statistic/show?adId=${ad.adId}`);
+      });
+    }
+  }, [randomAds]);
+
   const updateCookie = (category) => {
     switch (category) {
       case "运动":

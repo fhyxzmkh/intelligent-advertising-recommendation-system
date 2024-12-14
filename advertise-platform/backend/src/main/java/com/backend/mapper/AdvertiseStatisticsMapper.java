@@ -14,4 +14,6 @@ public interface AdvertiseStatisticsMapper extends BaseMapper<AdvertiseStatistic
 
     Integer selectClickedCount(@Param("adId") String adId);
 
+    Integer selectShowedCount(@Param("adId") String adId);
+
 }

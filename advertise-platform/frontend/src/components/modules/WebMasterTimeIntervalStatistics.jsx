@@ -22,7 +22,7 @@ ChartJS.register(
   Legend,
 );
 
-export const TimeIntervalStatistics = ({ currentUser }) => {
+export const WebMasterTimeIntervalStatistics = ({ currentUser }) => {
   const [rawData, setRawData] = useState([]);
   const [chartData, setChartData] = useState({});
   const [viewMode, setViewMode] = useState("hour"); // "hour", "day", "month", "year"
@@ -31,9 +31,7 @@ export const TimeIntervalStatistics = ({ currentUser }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(
-          `http://localhost:8102/api/statistic/my-statistics?author=${currentUser.uid}`,
-        );
+        const resp = await axios.get(`http://localhost:8102/api/statistic/all`);
 
         setRawData(resp.data);
         setLoading(false);

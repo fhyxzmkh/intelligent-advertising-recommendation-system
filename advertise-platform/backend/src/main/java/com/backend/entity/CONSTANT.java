@@ -13,6 +13,7 @@ public class CONSTANT {
     }
 
     public enum OperationType {
-        CLICK
+        CLICK,
+        SHOW
     }
 }

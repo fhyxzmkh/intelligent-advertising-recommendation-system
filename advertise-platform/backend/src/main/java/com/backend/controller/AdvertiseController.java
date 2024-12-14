@@ -89,7 +89,7 @@ public class AdvertiseController {
 
         // ========================================
         String advertiseCategory = calcWeight(user_id);
-        // System.out.println(advertiseCategory);
+        System.out.println(advertiseCategory);
 
         if (!advertiseCategory.equals("随机"))
             return advertiseInfoService.getAdvertiseInfoByCategory(advertiseCategory);

@@ -31,7 +31,12 @@ public class StatisticController {
         return advertiseStatisticsService.getAllStatistics();
     }
 
-    @GetMapping("/details")
+    @GetMapping("/my-statistics")
+    public List<AdvertiseStatistics> getMyStatistics(@RequestParam("author") String author) {
+        return advertiseStatisticsService.getStatisticsByAuthor(author);
+    }
+
+    @GetMapping("/all-details")
     public List<AdvertiseInfo> getAllAdvertiseDetails() {
         List<AdvertiseInfo> advertiseInfos = advertiseInfoService.getAllAdvertiseInfo();
 
@@ -39,29 +44,63 @@ public class StatisticController {
             advertiseInfo.setClickedCount(
                     advertiseStatisticsService.getClickedCount(advertiseInfo.getAdId())
             );
+            advertiseInfo.setShowedCount(
+                    advertiseStatisticsService.getShowedCount(advertiseInfo.getAdId())
+            );
         }
 
         return advertiseInfos;
     }
 
-    @GetMapping("/my-statistics")
-    public List<AdvertiseStatistics> getMyStatistics(@RequestParam("author") String author) {
-        return advertiseStatisticsService.getStatisticsByAuthor(author);
+    @GetMapping("/my-details")
+    public List<AdvertiseInfo> getMyAdvertiseDetails(@RequestParam("uid") String uid) {
+        List<AdvertiseInfo> advertiseInfos = advertiseInfoService.getAdvertiseInfoByAuthor(uid);
+
+        for (AdvertiseInfo advertiseInfo : advertiseInfos) {
+            advertiseInfo.setClickedCount(
+                    advertiseStatisticsService.getClickedCount(advertiseInfo.getAdId())
+            );
+            advertiseInfo.setShowedCount(
+                    advertiseStatisticsService.getShowedCount(advertiseInfo.getAdId())
+            );
+        }
+
+        return advertiseInfos;
     }
+
 
     @GetMapping("/click")
     public void clickAdvertise(@RequestParam String adId) {
         AdvertiseInfo clickedAd = advertiseInfoService.getAdvertiseInfoById(adId);
 
         if (clickedAd == null) return;
-
-        System.out.println("Advertise clicked: " + clickedAd);
+        //System.out.println("Advertise clicked: " + clickedAd);
 
         AdvertiseStatistics newData = new AdvertiseStatistics();
         newData.setAdId(adId);
-        newData.setOperationDate(LocalDateTime.now());;
+        newData.setOperationDate(LocalDateTime.now());
         newData.setStatId(UUID.randomUUID().toString());
         newData.setOperationType(CONSTANT.OperationType.CLICK);
+
+        newData.setAuthor(advertiseInfoService.getAdvertiseInfoById(adId).getAuthor());
+
+        advertiseStatisticsService.InsertAdvertiseStatistics(newData);
+    }
+
+    @GetMapping("/show")
+    public void showAdvertise(@RequestParam String adId) {
+        AdvertiseInfo showedAd = advertiseInfoService.getAdvertiseInfoById(adId);
+
+        if (showedAd == null) return;
+        //System.out.println("Advertise clicked: " + showedAd);
+
+        AdvertiseStatistics newData = new AdvertiseStatistics();
+        newData.setAdId(adId);
+        newData.setOperationDate(LocalDateTime.now());
+        newData.setStatId(UUID.randomUUID().toString());
+        newData.setOperationType(CONSTANT.OperationType.SHOW);
+
+        newData.setAuthor(advertiseInfoService.getAdvertiseInfoById(adId).getAuthor());
 
         advertiseStatisticsService.InsertAdvertiseStatistics(newData);
     }

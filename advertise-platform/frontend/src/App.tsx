@@ -4,6 +4,7 @@ import { RegisterPage } from "./components/pages/RegisterPage.jsx";
 import { AdminPage } from "./components/pages/AdminPage.js";
 import { useState } from "react";
 import { AdvertiserPage } from "./components/pages/AdvertiserPage";
+import { WebMasterPage } from "./components/pages/WebMasterPage";
 
 type User = {
   uid: string;
@@ -34,6 +35,10 @@ function App() {
         <Route
           path="/advertiser"
           element={<AdvertiserPage currentUser={currentUser} />}
+        />
+        <Route
+          path="/webmaster"
+          element={<WebMasterPage currentUser={currentUser} />}
         />
       </Routes>
     </>

@@ -15,4 +15,10 @@
         WHERE ad_id = #{adId} AND operation_type = 'CLICK'
     </select>
 
+    <select id="selectShowedCount" resultType="Integer">
+        SELECT COUNT(*)
+        FROM advertise_platform.advertise_statistics
+        WHERE ad_id = #{adId} AND operation_type = 'SHOW'
+    </select>
+
 </mapper>
