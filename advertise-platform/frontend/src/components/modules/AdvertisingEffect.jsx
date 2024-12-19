@@ -8,7 +8,7 @@ export const AdvertisingEffect = ({ currentUser }) => {
   useEffect(() => {
     const getAds = async () => {
       const response = await axios.get(
-        `http://localhost:8102/api/statistic/my-details?uid=${currentUser.uid}`,
+        `http://101.43.35.186:8102/api/statistic/my-details?uid=${currentUser.uid}`,
       );
       setAds(response.data);
       console.log(response.data);

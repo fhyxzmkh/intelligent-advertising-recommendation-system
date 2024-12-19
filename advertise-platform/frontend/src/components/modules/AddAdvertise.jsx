@@ -10,7 +10,7 @@ export const AddAdvertise = ({ currentUser }) => {
     values["author"] = currentUser.uid;
 
     axios
-      .post("http://localhost:8102/api/advertise/add", values)
+      .post("http://101.43.35.186:8102/api/advertise/add", values)
       .then((response) => {
         console.log("Add advertise successful:", response.data);
         alert("Add advertise successful");

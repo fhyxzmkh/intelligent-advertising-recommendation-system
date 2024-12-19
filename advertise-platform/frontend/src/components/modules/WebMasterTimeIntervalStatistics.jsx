@@ -31,7 +31,9 @@ export const WebMasterTimeIntervalStatistics = ({ currentUser }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`http://localhost:8102/api/statistic/all`);
+        const resp = await axios.get(
+          `http://101.43.35.186:8102/api/statistic/all`,
+        );
 
         setRawData(resp.data);
         setLoading(false);

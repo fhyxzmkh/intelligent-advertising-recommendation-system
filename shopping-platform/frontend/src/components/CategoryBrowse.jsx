@@ -13,7 +13,7 @@ export const CategoryBrowse = ({
     if (category === "全部") {
       getProducts = async () => {
         try {
-          const resp = await axios.get(`http://localhost:8100/api/product`);
+          const resp = await axios.get(`http://101.43.35.186:8100/api/product`);
           setProducts(resp.data);
         } catch (error) {
           console.error("Error fetching products:", error);
@@ -25,7 +25,7 @@ export const CategoryBrowse = ({
       getProducts = async () => {
         try {
           const resp = await axios.get(
-            `http://localhost:8100/api/product/category?category=${category}`,
+            `http://101.43.35.186:8100/api/product/category?category=${category}`,
           );
           setProducts(resp.data);
         } catch (error) {

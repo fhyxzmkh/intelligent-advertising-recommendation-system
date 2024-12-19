@@ -7,9 +7,9 @@ export const DeleteAdvertise = ({ currentUser }) => {
 
   let url = "";
   if (currentUser.role === "ADMIN")
-    url = "http://localhost:8102/api/advertise/all";
+    url = "http://101.43.35.186:8102/api/advertise/all";
   if (currentUser.role === "ADVERTISER")
-    url = `http://localhost:8102/api/advertise/my-advertise?author=${currentUser.uid}`;
+    url = `http://101.43.35.186:8102/api/advertise/my-advertise?author=${currentUser.uid}`;
 
   const getAds = async () => {
     const resp = await axios.get(url);
@@ -24,7 +24,7 @@ export const DeleteAdvertise = ({ currentUser }) => {
   const handleClick = async (ad) => {
     try {
       await axios.get(
-        `http://localhost:8102/api/advertise/delete?adId=${ad.adId}`,
+        `http://101.43.35.186:8102/api/advertise/delete?adId=${ad.adId}`,
       );
       await getAds();
       alert("Delete advertise successfully!");

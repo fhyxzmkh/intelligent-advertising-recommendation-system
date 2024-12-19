@@ -32,7 +32,7 @@ export const TimeIntervalStatistics = ({ currentUser }) => {
     const fetchData = async () => {
       try {
         const resp = await axios.get(
-          `http://localhost:8102/api/statistic/my-statistics?author=${currentUser.uid}`,
+          `http://101.43.35.186:8102/api/statistic/my-statistics?author=${currentUser.uid}`,
         );
 
         setRawData(resp.data);

@@ -16,7 +16,7 @@ export const ChangeUser = () => {
   const [form] = Form.useForm();
 
   const getUsers = async () => {
-    const resp = await axios.get("http://localhost:8102/api/user/all");
+    const resp = await axios.get("http://101.43.35.186:8102/api/user/all");
     console.log(resp.data);
     setUsers(resp.data);
   };
@@ -33,7 +33,7 @@ export const ChangeUser = () => {
     };
 
     try {
-      await axios.post("http://localhost:8102/api/user/update", dataJSON);
+      await axios.post("http://101.43.35.186:8102/api/user/update", dataJSON);
       alert("修改成功");
       form.resetFields();
       setIsModalOpen(false);

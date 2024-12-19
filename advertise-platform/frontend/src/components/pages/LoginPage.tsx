@@ -20,7 +20,7 @@ export const LoginPage = ({ setCurrentUser }) => {
     console.log("Received values of form: ", values);
 
     axios
-      .post("http://localhost:8102/api/login", values)
+      .post("http://101.43.35.186:8102/api/login", values)
       .then((response) => {
         console.log("Registration successful:", response.data);
         alert("Login successful");

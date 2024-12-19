@@ -10,7 +10,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     const getAdvertise = async () => {
       await axios
         .post(
-          "http://localhost:8102/api/advertise",
+          "http://101.43.35.186:8102/api/advertise",
           { type: "shopping", apiKey: "5c10c5d5-f007-4d84-af2d-a0d5dac5370e" },
           {
             withCredentials: true, // 确保Cookie被发送
@@ -40,7 +40,9 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     // 在 randomAds 更新后，调用 API 记录广告展示
     if (randomAds.length > 0) {
       randomAds.forEach((ad) => {
-        axios.get(`http://localhost:8102/api/statistic/show?adId=${ad.adId}`);
+        axios.get(
+          `http://101.43.35.186:8102/api/statistic/show?adId=${ad.adId}`,
+        );
       });
     }
   }, [randomAds]);
@@ -93,7 +95,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     // alert(`adId: ${ad.adId}`);
     updateCookie(ad.category);
 
-    axios.get(`http://localhost:8102/api/statistic/click?adId=${ad.adId}`);
+    axios.get(`http://101.43.35.186:8102/api/statistic/click?adId=${ad.adId}`);
   };
 
   return (

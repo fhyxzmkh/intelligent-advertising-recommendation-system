@@ -10,7 +10,7 @@ export const ApiFunction = ({ currentUser }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8102/api/apikey/get-api`,
+        `http://101.43.35.186:8102/api/apikey/get-api`,
         {
           params: { uid: currentUser.uid },
         },
@@ -33,7 +33,7 @@ export const ApiFunction = ({ currentUser }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8102/api/apikey/add-api`,
+        `http://101.43.35.186:8102/api/apikey/add-api`,
         {
           params: { uid: currentUser.uid },
         },
@@ -55,7 +55,7 @@ export const ApiFunction = ({ currentUser }) => {
   const deleteApiKey = async () => {
     try {
       setLoading(true);
-      await axios.get(`http://localhost:8102/api/apikey/delete-api`, {
+      await axios.get(`http://101.43.35.186:8102/api/apikey/delete-api`, {
         params: { uid: currentUser.uid },
       });
 

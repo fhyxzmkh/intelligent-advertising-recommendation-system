@@ -8,7 +8,7 @@ export const RegisterPage = () => {
     console.log("Received values of form: ", values);
 
     axios
-      .post("http://localhost:8102/api/register", values)
+      .post("http://101.43.35.186:8102/api/register", values)
       .then((response) => {
         console.log("Registration successful:", response.data);
         alert("Register successful");

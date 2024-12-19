@@ -17,9 +17,9 @@ export const ChangeAdvertise = ({ currentUser }) => {
 
   let url = "";
   if (currentUser.role === "ADMIN")
-    url = "http://localhost:8102/api/advertise/all";
+    url = "http://101.43.35.186:8102/api/advertise/all";
   if (currentUser.role === "ADVERTISER")
-    url = `http://localhost:8102/api/advertise/my-advertise?author=${currentUser.uid}`;
+    url = `http://101.43.35.186:8102/api/advertise/my-advertise?author=${currentUser.uid}`;
 
   const getAds = async () => {
     const resp = await axios.get(url);
@@ -37,7 +37,10 @@ export const ChangeAdvertise = ({ currentUser }) => {
     values["adId"] = selectedAd.adId;
 
     try {
-      await axios.post("http://localhost:8102/api/advertise/update", values);
+      await axios.post(
+        "http://101.43.35.186:8102/api/advertise/update",
+        values,
+      );
       alert("修改成功");
       form.resetFields();
       setIsModalOpen(false);

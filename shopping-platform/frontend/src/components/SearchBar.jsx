@@ -15,7 +15,7 @@ export const SearchBar = ({
 }) => {
   const handleSearch = async (value) => {
     try {
-      const resp = await axios.post("http://localhost:8100/api/product", {
+      const resp = await axios.post("http://101.43.35.186:8100/api/product", {
         keyword: value,
       });
       setProducts(resp.data);

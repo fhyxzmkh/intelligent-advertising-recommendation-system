@@ -6,7 +6,7 @@ export const DeleteUser = () => {
   const [users, setUsers] = useState([]);
 
   const getUsers = async () => {
-    const resp = await axios.get("http://localhost:8102/api/user/all");
+    const resp = await axios.get("http://101.43.35.186:8102/api/user/all");
     console.log(resp.data);
     setUsers(resp.data);
   };
@@ -17,7 +17,9 @@ export const DeleteUser = () => {
 
   const handleClick = async (user) => {
     try {
-      await axios.get(`http://localhost:8102/api/user/delete?uid=${user.uid}`);
+      await axios.get(
+        `http://101.43.35.186:8102/api/user/delete?uid=${user.uid}`,
+      );
       await getUsers();
       alert("Delete user successfully!");
     } catch (error) {

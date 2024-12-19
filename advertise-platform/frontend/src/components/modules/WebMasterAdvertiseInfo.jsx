@@ -16,7 +16,7 @@ export const WebMasterAdvertiseInfo = ({ currentUser }) => {
   const [form] = Form.useForm();
 
   const getAds = async () => {
-    const resp = await axios.get("http://localhost:8102/api/advertise/all");
+    const resp = await axios.get("http://101.43.35.186:8102/api/advertise/all");
     console.log(resp.data);
     setAds(resp.data);
   };
@@ -31,7 +31,10 @@ export const WebMasterAdvertiseInfo = ({ currentUser }) => {
     values["adId"] = selectedAd.adId;
 
     try {
-      await axios.post("http://localhost:8102/api/advertise/update", values);
+      await axios.post(
+        "http://101.43.35.186:8102/api/advertise/update",
+        values,
+      );
       alert("修改成功");
       form.resetFields();
       setIsModalOpen(false);
