@@ -3,9 +3,11 @@ package com.backend.controller;
 import com.backend.entity.AdvertiseInfo;
 import com.backend.entity.NewsUserProfile;
 import com.backend.entity.ShoppingUserProfile;
+import com.backend.entity.UserInfo;
 import com.backend.service.AdvertiseInfoService;
 import com.backend.service.NewsUserProfileService;
 import com.backend.service.ShoppingUserProfileService;
+import com.backend.service.UserInfoService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class AdvertiseController {
 
     @Autowired
     private AdvertiseInfoService advertiseInfoService;
+    @Autowired
+    private UserInfoService userInfoService;
 
     @PostMapping("/add")
     public void insertAdvertise(@RequestBody AdvertiseInfo advertiseInfo) {
@@ -61,7 +65,14 @@ public class AdvertiseController {
 
     @PostMapping
     public List<AdvertiseInfo> getParticularAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+        String apiKey = requestBody.get("apiKey");
         String type = requestBody.get("type");
+
+        // 检索api
+        UserInfo userInfo = userInfoService.findByApiKey(apiKey);
+        if (userInfo == null) {
+            return null;
+        }
 
         String user_id = null;
         int sport_score = 0, digit_score = 0, program_score = 0, edu_score = 0;

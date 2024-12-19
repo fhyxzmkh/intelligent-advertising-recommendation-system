@@ -11,7 +11,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
       await axios
         .post(
           "http://localhost:8102/api/advertise",
-          { type: "news" },
+          { type: "news", apiKey: "5c10c5d5-f007-4d84-af2d-a0d5dac5370e" },
           {
             withCredentials: true, // 确保Cookie被发送
           },
