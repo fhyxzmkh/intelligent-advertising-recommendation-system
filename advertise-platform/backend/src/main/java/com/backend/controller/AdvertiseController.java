@@ -11,7 +11,9 @@ import com.backend.service.UserInfoService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class AdvertiseController {
 
     @Autowired
     private AdvertiseInfoService advertiseInfoService;
+
     @Autowired
     private UserInfoService userInfoService;
 
@@ -62,16 +65,18 @@ public class AdvertiseController {
         advertiseInfoService.updateAdvertiseInfo(advertiseInfo);
     }
 
-
-    @PostMapping
+    @PostMapping("/get-particular-advertise")
     public List<AdvertiseInfo> getParticularAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
         String apiKey = requestBody.get("apiKey");
         String type = requestBody.get("type");
 
-        // 检索api
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "API Key is missing");
+        }
+
         UserInfo userInfo = userInfoService.findByApiKey(apiKey);
         if (userInfo == null) {
-            return null;
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
         }
 
         String user_id = null;
@@ -94,13 +99,13 @@ public class AdvertiseController {
             }
         }
 
-        if (needUpdateInfo(type, user_id, sport_score, digit_score, program_score, edu_score)) {
-            updateInfo(type, user_id, sport_score, digit_score, program_score, edu_score);
+        if (user_id == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User ID is no exist");
         }
 
-        // ========================================
+        updateTableInfo(type, user_id, sport_score, digit_score, program_score, edu_score);
+
         String advertiseCategory = calcWeight(user_id);
-        System.out.println(advertiseCategory);
 
         if (!advertiseCategory.equals("随机"))
             return advertiseInfoService.getAdvertiseInfoByCategory(advertiseCategory);
@@ -108,37 +113,7 @@ public class AdvertiseController {
             return advertiseInfoService.getAllAdvertiseInfo();
     }
 
-    private boolean needUpdateInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
-
-        if ("shopping".equals(type)) {
-            ShoppingUserProfile shoppingInfo = shoppingUserProfileService.getShoppingInfoByUserId(user_id);
-
-            if (shoppingInfo == null) {
-                return true;
-            }
-
-            return shoppingInfo.getSportScore() != sport_score ||
-                    shoppingInfo.getDigitScore() != digit_score ||
-                    shoppingInfo.getProgramScore() != program_score ||
-                    shoppingInfo.getEduScore() != edu_score;
-        }
-        if ("news".equals(type)) {
-            NewsUserProfile newsInfo = newsUserProfileService.getNewsInfoByUserId(user_id);
-
-            if (newsInfo == null) {
-                return true;
-            }
-
-            return newsInfo.getSportScore() != sport_score ||
-                    newsInfo.getDigitScore() != digit_score ||
-                    newsInfo.getProgramScore() != program_score ||
-                    newsInfo.getEduScore() != edu_score;
-        }
-
-        return false;
-    }
-
-    private void updateInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
+    private void updateTableInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {
 
         if ("shopping".equals(type)) {
             ShoppingUserProfile shoppingInfo = new ShoppingUserProfile();
@@ -151,6 +126,7 @@ public class AdvertiseController {
 
             shoppingUserProfileService.insertOrUpdateShoppingInfo(shoppingInfo);
         }
+
         if ("news".equals(type)) {
             NewsUserProfile newsInfo = new NewsUserProfile();
 

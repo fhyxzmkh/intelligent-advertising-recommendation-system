@@ -15,30 +15,30 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user_id"]);
 
   useEffect(() => {
-    // 初始化 FingerprintJS
     const fpPromise = FingerprintJS.load();
 
-    // 生成浏览器指纹
     fpPromise
       .then((fp) => fp.get())
       .then((result) => {
-        // 将指纹存储到 uuid 状态 : 316da16e73592d7db2fca275b2c28fe4
-        setUuid(result.visitorId);
-        setCookie("user_id", uuid);
+        setUuid(result.visitorId); // 仅更新状态
       })
       .catch((error) => {
         console.error("Failed to generate fingerprint:", error);
       });
-  }, [setCookie, uuid]);
+  }, []);
+
+  useEffect(() => {
+    if (uuid) {
+      setCookie("user_id", uuid, { path: "/" });
+    }
+  }, [uuid, setCookie]);
 
   useEffect(() => {
     const getNewsList = async () => {
       try {
-        const resp = await axios.get(
-          "https://newsapi.org/v2/top-headlines?country=us&apiKey=93c9087a0cb141bd8ad71e67361892cf",
-        );
-        setNewsList(resp.data.articles);
-        console.log(resp.data.articles.slice(0, 5));
+        const resp = await axios.get("http://101.43.35.186:8101/api/newsList");
+        setNewsList(resp.data.newslist);
+        //console.log(resp.data.articles.slice(0, 5));
       } catch (error) {
         console.error("Error searching news:", error);
       }
