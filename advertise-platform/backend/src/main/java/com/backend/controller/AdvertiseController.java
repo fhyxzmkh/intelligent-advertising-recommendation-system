@@ -160,7 +160,6 @@ public class AdvertiseController {
             edu_score += newsInfo.getEduScore();
         }
 
-
         int maxScore = Math.max(sport_score, Math.max(digit_score, Math.max(program_score, edu_score)));
 
         if (maxScore == 0) {

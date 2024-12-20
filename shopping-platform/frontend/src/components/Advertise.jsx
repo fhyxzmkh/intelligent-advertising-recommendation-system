@@ -10,7 +10,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     const getAdvertise = async () => {
       await axios
         .post(
-          "http://101.43.35.186:8102/api/advertise",
+          "http://101.43.35.186:8102/api/advertise/get-particular-advertise",
           { type: "shopping", apiKey: "5c10c5d5-f007-4d84-af2d-a0d5dac5370e" },
           {
             withCredentials: true, // 确保Cookie被发送
@@ -47,42 +47,50 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
     }
   }, [randomAds]);
 
-  const updateCookie = (category) => {
+  const updateCookie = (category, weight) => {
     switch (category) {
       case "运动":
         if (!cookies.sport_score) {
-          setCookie("sport_score", 30);
+          setCookie("sport_score", weight, { path: "/" });
         } else {
           const preScore = cookies.sport_score;
           removeCookie("sport_score");
-          setCookie("sport_score", Number(preScore) + 30);
+          setCookie("sport_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "编程":
         if (!cookies.program_score) {
-          setCookie("program_score", 30);
+          setCookie("program_score", weight, { path: "/" });
         } else {
           const preScore = cookies.program_score;
           removeCookie("program_score");
-          setCookie("program_score", Number(preScore) + 30);
+          setCookie("program_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "数码":
         if (!cookies.digit_score) {
-          setCookie("digit_score", 30);
+          setCookie("digit_score", weight, { path: "/" });
         } else {
           const preScore = cookies.digit_score;
           removeCookie("digit_score");
-          setCookie("digit_score", Number(preScore) + 30);
+          setCookie("digit_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "考研":
         if (!cookies.edu_score) {
-          setCookie("edu_score", 30);
+          setCookie("edu_score", weight, { path: "/" });
         } else {
           const preScore = cookies.edu_score;
           removeCookie("edu_score");
-          setCookie("edu_score", Number(preScore) + 30);
+          setCookie("edu_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       default:
@@ -92,8 +100,7 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
 
   const handleClick = (ad) => {
     alert(`This is ${ad.adCategory}!`);
-    // alert(`adId: ${ad.adId}`);
-    updateCookie(ad.category);
+    updateCookie(ad.adCategory, 30);
 
     axios.get(`http://101.43.35.186:8102/api/statistic/click?adId=${ad.adId}`);
   };

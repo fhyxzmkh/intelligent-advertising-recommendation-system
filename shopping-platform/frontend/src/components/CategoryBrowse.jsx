@@ -41,38 +41,46 @@ export const CategoryBrowse = ({
     switch (category) {
       case "运动":
         if (!cookies.sport_score) {
-          setCookie("sport_score", weight);
+          setCookie("sport_score", weight, { path: "/" });
         } else {
           const preScore = cookies.sport_score;
           removeCookie("sport_score");
-          setCookie("sport_score", Number(preScore) + weight);
+          setCookie("sport_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "编程":
         if (!cookies.program_score) {
-          setCookie("program_score", weight);
+          setCookie("program_score", weight, { path: "/" });
         } else {
           const preScore = cookies.program_score;
           removeCookie("program_score");
-          setCookie("program_score", Number(preScore) + weight);
+          setCookie("program_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "数码":
         if (!cookies.digit_score) {
-          setCookie("digit_score", weight);
+          setCookie("digit_score", weight, { path: "/" });
         } else {
           const preScore = cookies.digit_score;
           removeCookie("digit_score");
-          setCookie("digit_score", Number(preScore) + weight);
+          setCookie("digit_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       case "考研":
         if (!cookies.edu_score) {
-          setCookie("edu_score", weight);
+          setCookie("edu_score", weight, { path: "/" });
         } else {
           const preScore = cookies.edu_score;
           removeCookie("edu_score");
-          setCookie("edu_score", Number(preScore) + weight);
+          setCookie("edu_score", Number(preScore) + weight, {
+            path: "/",
+          });
         }
         break;
       default:
