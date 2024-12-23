@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { SearchBar } from "./components/SearchBar.jsx";
 
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useCookies } from "react-cookie";
 import { NewsList } from "./components/NewsList.jsx";
 import { Advertise } from "./components/Advertise.jsx";
+
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 function App() {
   const [uuid, setUuid] = useState("");
@@ -14,18 +15,29 @@ function App() {
 
   const [cookies, setCookie, removeCookie] = useCookies(["user_id"]);
 
-  useEffect(() => {
-    const fpPromise = FingerprintJS.load();
+  const { isLoading, error, data, getData } = useVisitorData(
+    { extendedResult: true },
+    { immediate: true },
+  );
 
-    fpPromise
-      .then((fp) => fp.get())
-      .then((result) => {
-        setUuid(result.visitorId); // 仅更新状态
-      })
-      .catch((error) => {
-        console.error("Failed to generate fingerprint:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const fpPromise = FingerprintJS.load();
+  //
+  //   fpPromise
+  //     .then((fp) => fp.get())
+  //     .then((result) => {
+  //       setUuid(result.visitorId); // 仅更新状态
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to generate fingerprint:", error);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    if (data?.visitorId) {
+      setUuid(data.visitorId);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (uuid) {

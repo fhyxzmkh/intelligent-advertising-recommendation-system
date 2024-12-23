@@ -67,8 +67,15 @@ public class AdvertiseController {
 
     @PostMapping("/get-particular-advertise")
     public List<AdvertiseInfo> getParticularAdvertise(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
-        String apiKey = requestBody.get("apiKey");
         String type = requestBody.get("type");
+        String apiKey = requestBody.get("apiKey");
+        String user_id = requestBody.get("user_id");
+
+        int sport_score = requestBody.get("sport_score") != null ? Integer.parseInt(requestBody.get("sport_score")) : 0;
+        int digit_score = requestBody.get("digit_score") != null ? Integer.parseInt(requestBody.get("digit_score")) : 0;
+        int program_score = requestBody.get("program_score") != null ? Integer.parseInt(requestBody.get("program_score")) : 0;
+        int edu_score = requestBody.get("edu_score") != null ? Integer.parseInt(requestBody.get("edu_score")) : 0;
+
 
         if (apiKey == null || apiKey.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "API Key is missing");
@@ -77,26 +84,6 @@ public class AdvertiseController {
         UserInfo userInfo = userInfoService.findByApiKey(apiKey);
         if (userInfo == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
-        }
-
-        String user_id = null;
-        int sport_score = 0, digit_score = 0, program_score = 0, edu_score = 0;
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (Objects.equals(cookie.getName(), "user_id")) {
-                    user_id = cookie.getValue();
-                } else if (Objects.equals(cookie.getName(), "sport_score")) {
-                    sport_score = Integer.parseInt(cookie.getValue());
-                } else if (Objects.equals(cookie.getName(), "digit_score")) {
-                    digit_score = Integer.parseInt(cookie.getValue());
-                } else if (Objects.equals(cookie.getName(), "program_score")) {
-                    program_score = Integer.parseInt(cookie.getValue());
-                } else if (Objects.equals(cookie.getName(), "edu_score")) {
-                    edu_score = Integer.parseInt(cookie.getValue());
-                }
-            }
         }
 
         if (user_id == null) {

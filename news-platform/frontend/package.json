@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@fingerprintjs/fingerprintjs": "^4.5.1",
+    "@fingerprintjs/fingerprintjs-pro-react": "^2.6.3",
     "antd": "^5.22.3",
     "axios": "^1.7.9",
     "react": "^18.3.1",

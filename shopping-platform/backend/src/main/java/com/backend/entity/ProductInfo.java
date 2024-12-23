@@ -26,6 +26,9 @@ public class ProductInfo {
     @TableField("price")
     private Double price;
 
+    @TableField("url")
+    private String url;
+
     public String getProductId() {
         return productId;
     }
@@ -74,15 +77,11 @@ public class ProductInfo {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "ProductInfo{" +
-                "productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productDescription='" + productDescription + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                '}';
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

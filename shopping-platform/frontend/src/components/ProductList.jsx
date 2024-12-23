@@ -101,6 +101,11 @@ export const ProductList = ({
     });
   };
 
+  const handleClick = (product) => {
+    updateCookie(product.category, 10);
+    window.open(product.url, "_blank");
+  };
+
   return (
     <div className="m-4">
       <List
@@ -109,7 +114,7 @@ export const ProductList = ({
         renderItem={(product) => (
           <List.Item>
             <Card
-              onClick={() => updateCookie(product.category, 10)}
+              onClick={() => handleClick(product)}
               hoverable
               cover={
                 <img
