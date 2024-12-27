@@ -90,6 +90,10 @@ public class AdvertiseController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User ID is no exist");
         }
 
+        if (Objects.equals(user_id, "undefined")) {
+            return advertiseInfoService.getAllAdvertiseInfo();
+        }
+
         updateTableInfo(type, user_id, sport_score, digit_score, program_score, edu_score);
 
         String advertiseCategory = calcWeight(user_id);

@@ -20,7 +20,7 @@ public class NewsController {
     @GetMapping("/newsList")
     public Map<String, Object> getNewsList(@RequestParam(value = "word", required = false) String word) {
         // 请求外部API
-        String apiUrl = "/api/tx/generalnews?key=f922bcb04085&num=30";
+        String apiUrl = "/api/tx/generalnews?key=96f163cda80b&num=30";
 
         if (word != null && !word.isEmpty()) {
             apiUrl += "&word=" + word;
