@@ -76,7 +76,6 @@ public class AdvertiseController {
         int program_score = requestBody.get("program_score") != null ? Integer.parseInt(requestBody.get("program_score")) : 0;
         int edu_score = requestBody.get("edu_score") != null ? Integer.parseInt(requestBody.get("edu_score")) : 0;
 
-
         if (apiKey == null || apiKey.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "API Key is missing");
         }
@@ -102,6 +101,37 @@ public class AdvertiseController {
             return advertiseInfoService.getAdvertiseInfoByCategory(advertiseCategory);
         else
             return advertiseInfoService.getAllAdvertiseInfo();
+    }
+
+    @PostMapping("/update-db")
+    public void checkDataUpdate(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+        String type = requestBody.get("type");
+        String apiKey = requestBody.get("apiKey");
+        String user_id = requestBody.get("user_id");
+
+        int sport_score = requestBody.get("sport_score") != null ? Integer.parseInt(requestBody.get("sport_score")) : 0;
+        int digit_score = requestBody.get("digit_score") != null ? Integer.parseInt(requestBody.get("digit_score")) : 0;
+        int program_score = requestBody.get("program_score") != null ? Integer.parseInt(requestBody.get("program_score")) : 0;
+        int edu_score = requestBody.get("edu_score") != null ? Integer.parseInt(requestBody.get("edu_score")) : 0;
+
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "API Key is missing");
+        }
+
+        UserInfo userInfo = userInfoService.findByApiKey(apiKey);
+        if (userInfo == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+        }
+
+        if (user_id == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User ID is no exist");
+        }
+
+        if (Objects.equals(user_id, "undefined")) {
+            return;
+        }
+
+        updateTableInfo(type, user_id, sport_score, digit_score, program_score, edu_score);
     }
 
     private void updateTableInfo(String type, String user_id, int sport_score, int digit_score, int program_score, int edu_score) {

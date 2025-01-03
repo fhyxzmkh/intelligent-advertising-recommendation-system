@@ -6,29 +6,30 @@ export const Advertise = ({ cookies, setCookie, removeCookie }) => {
   const [advertises, setAdvertises] = useState([]);
   const [randomAds, setRandomAds] = useState([]);
 
+  const getAdvertise = async () => {
+    await axios
+      .post(
+        "http://101.43.35.186:8102/api/advertise/get-particular-advertise",
+        {
+          type: "shopping",
+          apiKey: "5c10c5d5-f007-4d84-af2d-a0d5dac5370e",
+          user_id: `${cookies.user_id}`,
+          sport_score: `${cookies.sport_score !== undefined ? cookies.sport_score : 0}`,
+          digit_score: `${cookies.digit_score !== undefined ? cookies.digit_score : 0}`,
+          program_score: `${cookies.program_score !== undefined ? cookies.program_score : 0}`,
+          edu_score: `${cookies.edu_score !== undefined ? cookies.edu_score : 0}`,
+        },
+      )
+      .then((response) => {
+        console.log("Response:", response.data);
+        setAdvertises(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   useEffect(() => {
-    const getAdvertise = async () => {
-      await axios
-        .post(
-          "http://101.43.35.186:8102/api/advertise/get-particular-advertise",
-          {
-            type: "shopping",
-            apiKey: "5c10c5d5-f007-4d84-af2d-a0d5dac5370e",
-            user_id: `${cookies.user_id}`,
-            sport_score: `${cookies.sport_score !== undefined ? cookies.sport_score : 0}`,
-            digit_score: `${cookies.digit_score !== undefined ? cookies.digit_score : 0}`,
-            program_score: `${cookies.program_score !== undefined ? cookies.program_score : 0}`,
-            edu_score: `${cookies.edu_score !== undefined ? cookies.edu_score : 0}`,
-          },
-        )
-        .then((response) => {
-          console.log("Response:", response.data);
-          setAdvertises(response.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
     getAdvertise();
   }, []);
 
