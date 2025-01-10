@@ -23,3 +23,7 @@ https://news-platform.pages.dev/
 
 http://101.43.35.186/advertise-platform/
 后端8102
+
+## 注意
+新闻网站API随时可能过期，若无数据实属正常现象。
+由于涉及到https向http发送请求，访问购物平台和新闻平台需要在“网站设置”中“允许不安全内容”。
